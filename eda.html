@@ -1,0 +1,1560 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Optimized Machine Learning Model for Predicting and Analyzing Accelerations in the New Ground Motion Models for Northern South America (NoSAm GMMs) &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'eda';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Machine Learning into the Civil Engineering" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="My sample book - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Machine Learning into the Civil Engineering
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Optimized Machine Learning Model for Predicting and Analyzing Accelerations in the New Ground Motion Models for Northern South America (NoSAm GMMs)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Feda.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/eda.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Optimized Machine Learning Model for Predicting and Analyzing Accelerations in the New Ground Motion Models for Northern South America (NoSAm GMMs)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos-eda">1. Análisis Exploratorio de datos  (EDA)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="optimized-machine-learning-model-for-predicting-and-analyzing-accelerations-in-the-new-ground-motion-models-for-northern-south-america-nosam-gmms">
+<h1>Optimized Machine Learning Model for Predicting and Analyzing Accelerations in the New Ground Motion Models for Northern South America (NoSAm GMMs)<a class="headerlink" href="#optimized-machine-learning-model-for-predicting-and-analyzing-accelerations-in-the-new-ground-motion-models-for-northern-south-america-nosam-gmms" title="Link to this heading">#</a></h1>
+<p>La ingenieria sismica es uno de los principales campos frente a la evaluación de riesgos y vulnerabilidad a partir de los desastres naturales, en este caso en específico, los sismos. Teniendo en cuenta variables como la magnitud sísmica (Momento Magnitude Mw), la distancia al hipocentro y el entorno tectónico, se busca predecir la aceleración espectral con un periodo de 0.01 s producidas por los sismos, con el objetivo de obtener un modelo confiable capaz de predecir la aceleración con periodos distintos.
+Los modelos anteriores (NoSAm GMMs) permitieron la estimación de la aceleración espectral con 5% de amortiguamiento en diferentes entornos tectónicos.
+Para ello, se utilizará una base de datos regional con aproximadamente 8800 observaciones recogidas por el Servicio Geológico Colombiano el cual incluye registros de Ecuador y Colombia. A partir de allí se compararán modelos tradicionales de Machine Learning (como KNN, regresión Ridge y Lasso, SVM y XGBoost) con un modelo original de stacking basado en modelos de XGBoost y LightGBM, con el objetivo de mejorar la precisión de predicción respecto a estudios previos y a su vez comparar las métricas generales con los modelos preliminares.</p>
+<p><strong>Palabras clave</strong>:
+ingeniería sismica, aceleración espectral, Machine Learning, predicción, riesgos, vulnerabilidad, desastres naturales, periodo</p>
+<section id="analisis-exploratorio-de-datos-eda">
+<h2>1. Análisis Exploratorio de datos  (EDA)<a class="headerlink" href="#analisis-exploratorio-de-datos-eda" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>  
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">LabelEncoder</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">PowerTransformer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">neighbors</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_squared_log_error</span><span class="p">,</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">explained_variance_score</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">kurtosis</span><span class="p">,</span> <span class="n">boxcox</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">mglearn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;C:/Users/elias/OneDrive/Desktop/MachineLearning/MLProject/Copia de DataBaseSGC.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Record Sequence Number</th>
+      <th>EQID</th>
+      <th>Epicenter Latitude (deg; positive N)</th>
+      <th>Epicenter Longitude (deg; positive E)</th>
+      <th>Hypocenter Depth (km)</th>
+      <th>Magnitude</th>
+      <th>Magnitude type</th>
+      <th>Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)</th>
+      <th>Nodal Plane 1 Strike (deg)</th>
+      <th>Nodal Plane 1 Dip (deg)</th>
+      <th>...</th>
+      <th>Station Elevation (m)</th>
+      <th>Tmax</th>
+      <th>Valor_T1.5</th>
+      <th>Repi_OpenQuake</th>
+      <th>Rjb_OpenQuake</th>
+      <th>Rrup_OpenQuake</th>
+      <th>Rx_OpenQuake</th>
+      <th>Rhypo_OpenQuake</th>
+      <th>Ry0_OpenQuake</th>
+      <th>T_0.01_RotD50</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>73</td>
+      <td>CO_20080524192044</td>
+      <td>4.374</td>
+      <td>-73.708</td>
+      <td>14.7</td>
+      <td>5.8671</td>
+      <td>Mw</td>
+      <td>Crustal</td>
+      <td>196</td>
+      <td>82</td>
+      <td>...</td>
+      <td>581.0</td>
+      <td>14</td>
+      <td>0.07</td>
+      <td>91.480436</td>
+      <td>85.352392</td>
+      <td>86.623229</td>
+      <td>5.748244</td>
+      <td>93.551751</td>
+      <td>85.165829</td>
+      <td>4.755494</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>74</td>
+      <td>CO_20100729193445</td>
+      <td>3.907</td>
+      <td>-75.097</td>
+      <td>33.1</td>
+      <td>5.0567</td>
+      <td>Mw</td>
+      <td>Crustal</td>
+      <td>37</td>
+      <td>54</td>
+      <td>...</td>
+      <td>581.0</td>
+      <td>15</td>
+      <td>0.05</td>
+      <td>96.319115</td>
+      <td>93.725261</td>
+      <td>99.461616</td>
+      <td>8.545095</td>
+      <td>102.497369</td>
+      <td>93.435791</td>
+      <td>10.887828</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>76</td>
+      <td>CO_19940913100134</td>
+      <td>7.105</td>
+      <td>-76.665</td>
+      <td>14.0</td>
+      <td>6.0202</td>
+      <td>Mw</td>
+      <td>Crustal</td>
+      <td>4</td>
+      <td>64</td>
+      <td>...</td>
+      <td>1472.0</td>
+      <td>2</td>
+      <td>0.09</td>
+      <td>180.238872</td>
+      <td>173.579980</td>
+      <td>174.684394</td>
+      <td>95.953705</td>
+      <td>181.353681</td>
+      <td>146.630792</td>
+      <td>4.847060</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>79</td>
+      <td>CO_19961104172500</td>
+      <td>7.364</td>
+      <td>-77.380</td>
+      <td>14.0</td>
+      <td>6.2562</td>
+      <td>Mw</td>
+      <td>Crustal</td>
+      <td>188</td>
+      <td>43</td>
+      <td>...</td>
+      <td>1472.0</td>
+      <td>2</td>
+      <td>0.10</td>
+      <td>253.961289</td>
+      <td>244.155697</td>
+      <td>244.405678</td>
+      <td>-188.792092</td>
+      <td>254.752031</td>
+      <td>154.796223</td>
+      <td>1.814338</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>84</td>
+      <td>CO_19990125181918</td>
+      <td>4.445</td>
+      <td>-75.659</td>
+      <td>17.0</td>
+      <td>6.1355</td>
+      <td>Mw</td>
+      <td>Crustal</td>
+      <td>8</td>
+      <td>65</td>
+      <td>...</td>
+      <td>1472.0</td>
+      <td>3</td>
+      <td>0.07</td>
+      <td>139.662026</td>
+      <td>134.252237</td>
+      <td>135.354859</td>
+      <td>-121.819668</td>
+      <td>141.709990</td>
+      <td>56.434882</td>
+      <td>9.462926</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>8806</th>
+      <td>8774</td>
+      <td>CO_20190331072713</td>
+      <td>-1.910</td>
+      <td>-80.810</td>
+      <td>5.0</td>
+      <td>5.6000</td>
+      <td>Mw</td>
+      <td>Interface</td>
+      <td>337</td>
+      <td>24</td>
+      <td>...</td>
+      <td>696.0</td>
+      <td>27</td>
+      <td>0.02</td>
+      <td>1236.021754</td>
+      <td>1230.674634</td>
+      <td>1230.049890</td>
+      <td>1178.334392</td>
+      <td>1236.043904</td>
+      <td>374.756057</td>
+      <td>0.004725</td>
+    </tr>
+    <tr>
+      <th>8807</th>
+      <td>8776</td>
+      <td>CO_20190331140913</td>
+      <td>-2.030</td>
+      <td>-80.890</td>
+      <td>10.0</td>
+      <td>5.0181</td>
+      <td>Mw</td>
+      <td>Interface</td>
+      <td>354</td>
+      <td>21</td>
+      <td>...</td>
+      <td>696.0</td>
+      <td>27</td>
+      <td>0.02</td>
+      <td>1253.442350</td>
+      <td>1249.197259</td>
+      <td>1248.234684</td>
+      <td>1023.671482</td>
+      <td>1253.495004</td>
+      <td>717.168683</td>
+      <td>0.003128</td>
+    </tr>
+    <tr>
+      <th>8808</th>
+      <td>8777</td>
+      <td>CO_20190408032300</td>
+      <td>-2.120</td>
+      <td>-80.360</td>
+      <td>47.0</td>
+      <td>5.0304</td>
+      <td>Mw</td>
+      <td>Interface</td>
+      <td>334</td>
+      <td>31</td>
+      <td>...</td>
+      <td>696.0</td>
+      <td>27</td>
+      <td>0.02</td>
+      <td>1216.435655</td>
+      <td>1213.141652</td>
+      <td>1209.579637</td>
+      <td>1162.208344</td>
+      <td>1217.416127</td>
+      <td>358.488368</td>
+      <td>0.003101</td>
+    </tr>
+    <tr>
+      <th>8809</th>
+      <td>8778</td>
+      <td>CO_20190409113955</td>
+      <td>3.750</td>
+      <td>-78.740</td>
+      <td>10.0</td>
+      <td>5.0266</td>
+      <td>Mw</td>
+      <td>Interface</td>
+      <td>26</td>
+      <td>32</td>
+      <td>...</td>
+      <td>696.0</td>
+      <td>20</td>
+      <td>0.02</td>
+      <td>729.062638</td>
+      <td>725.469563</td>
+      <td>725.018483</td>
+      <td>-469.472251</td>
+      <td>729.171353</td>
+      <td>552.584146</td>
+      <td>0.020313</td>
+    </tr>
+    <tr>
+      <th>8810</th>
+      <td>8809</td>
+      <td>CO_20200117043206</td>
+      <td>2.120</td>
+      <td>-79.560</td>
+      <td>20.0</td>
+      <td>4.7000</td>
+      <td>Mw</td>
+      <td>Interface</td>
+      <td>44</td>
+      <td>25</td>
+      <td>...</td>
+      <td>696.0</td>
+      <td>40</td>
+      <td>0.02</td>
+      <td>876.174697</td>
+      <td>873.178545</td>
+      <td>872.100140</td>
+      <td>-344.376016</td>
+      <td>876.453666</td>
+      <td>802.354454</td>
+      <td>0.007543</td>
+    </tr>
+  </tbody>
+</table>
+<p>8811 rows × 30 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 8811 entries, 0 to 8810
+Data columns (total 30 columns):
+ #   Column                                                                                    Non-Null Count  Dtype  
+---  ------                                                                                    --------------  -----  
+ 0   Record Sequence Number                                                                    8811 non-null   int64  
+ 1   EQID                                                                                      8811 non-null   object 
+ 2   Epicenter Latitude (deg; positive N)                                                      8811 non-null   float64
+ 3   Epicenter Longitude (deg; positive E)                                                     8811 non-null   float64
+ 4   Hypocenter Depth (km)                                                                     8811 non-null   float64
+ 5   Magnitude                                                                                 8811 non-null   float64
+ 6   Magnitude type                                                                            8811 non-null   object 
+ 7   Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)  8811 non-null   object 
+ 8   Nodal Plane 1 Strike (deg)                                                                8811 non-null   int64  
+ 9   Nodal Plane 1 Dip (deg)                                                                   8811 non-null   int64  
+ 10  Nodal Plane 1 Rake Angle (deg)                                                            8811 non-null   int64  
+ 11  Nodal Plane 2 Strike (deg)                                                                8811 non-null   int64  
+ 12  Nodal Plane 2 Dip (deg)                                                                   8811 non-null   int64  
+ 13  Nodal Plane 2 Rake Angle (deg)                                                            8811 non-null   int64  
+ 14  Fault Plane (1; 2; X)                                                                     8811 non-null   int64  
+ 15  Style-of-Faulting (S; R; N; U)                                                            8811 non-null   object 
+ 16  Station ID                                                                                8811 non-null   object 
+ 17  Station Code                                                                              8811 non-null   object 
+ 18  Station Latitude (deg positive N)                                                         8811 non-null   float64
+ 19  Station Longitude (deg positive E)                                                        8811 non-null   float64
+ 20  Station Elevation (m)                                                                     8811 non-null   float64
+ 21  Tmax                                                                                      8811 non-null   int64  
+ 22  Valor_T1.5                                                                                8811 non-null   float64
+ 23  Repi_OpenQuake                                                                            8811 non-null   float64
+ 24  Rjb_OpenQuake                                                                             8811 non-null   float64
+ 25  Rrup_OpenQuake                                                                            8811 non-null   float64
+ 26  Rx_OpenQuake                                                                              8811 non-null   float64
+ 27  Rhypo_OpenQuake                                                                           8811 non-null   float64
+ 28  Ry0_OpenQuake                                                                             8811 non-null   float64
+ 29  T_0.01_RotD50                                                                             8811 non-null   float64
+dtypes: float64(15), int64(9), object(6)
+memory usage: 2.0+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Identificación de cada variable del conjunto de datos</strong><br><br>
+<strong>EQID</strong>: Identificador único del evento sísmico.<br>
+<strong>Epicenter Latitude (deg; positive N)</strong>: Latitud del epicentro en grados (positiva hacia el norte).<br>
+<strong>Epicenter Longitude (deg; positive E)</strong>: Longitud del epicentro en grados (positiva hacia el este).<br>
+<strong>Hypocenter Depth (km)</strong>: Profundidad del hipocentro en kilómetros.<br>
+<strong>Magnitude</strong>: Magnitud del sismo.<br>
+<strong>Magnitude type</strong>: Tipo de magnitud (por ejemplo, ML, MW, MS, MB).<br>
+<strong>Tectonic environment</strong>: Entorno tectónico del sismo (Crustal, Inslab, Interface, Stable, Deep, Volcanic, Oceanic Crust).<br>
+<strong>Nodal Plane 1 Strike (deg)</strong>: Ángulo de rumbo del primer plano nodal en grados.<br>
+<strong>Nodal Plane 1 Dip (deg)</strong>: Ángulo de buzamiento del primer plano nodal en grados.<br>
+<strong>Nodal Plane 1 Rake Angle (deg)</strong>: Ángulo de deslizamiento del primer plano nodal en grados.<br>
+<strong>Nodal Plane 2 Strike (deg)</strong>: Ángulo de rumbo del segundo plano nodal en grados.<br>
+<strong>Nodal Plane 2 Dip (deg)</strong>: Ángulo de buzamiento del segundo plano nodal en grados.<br>
+<strong>Nodal Plane 2 Rake Angle (deg)</strong>: Ángulo de deslizamiento del segundo plano nodal en grados.<br>
+<strong>Fault Plane (1; 2; X)</strong>: Plano de falla utilizado para el análisis (1 o 2, X si es desconocido).<br>
+<strong>Style-of-Faulting (S; R; N; U)</strong>: Estilo de falla (S: Strike-slip, R: Reverse, N: Normal, U: Desconocido).<br>
+<strong>Station ID</strong>: Identificador único de la estación sísmica.<br>
+<strong>Station Code</strong>: Código de la estación sísmica.<br>
+<strong>Station Latitude (deg positive N)</strong>: Latitud de la estación sísmica en grados (positiva hacia el norte).<br>
+<strong>Station Longitude (deg positive E)</strong>: Longitud de la estación sísmica en grados (positiva hacia el este).<br>
+<strong>Station Elevation (m)</strong>: Elevación de la estación sísmica en metros.<br>
+<strong>Tmax</strong>: Valor máximo del período de vibración analizado.<br>
+<strong>Valor_T1.5</strong>: Valor del parámetro sísmico en el período de 1.5 segundos.<br>
+<strong>Repi_OpenQuake</strong>: Distancia epicentral (distancia horizontal desde el epicentro a la estación).<br>
+<strong>Rjb_OpenQuake</strong>: Distancia de Joyner-Boore (distancia horizontal desde la estación a la proyección de la falla).<br>
+<strong>Rrup_OpenQuake</strong>: Distancia de ruptura (distancia mínima entre la estación y la superficie de la falla).<br>
+<strong>Rx_OpenQuake</strong>: Coordenada horizontal de la estación en relación con la falla.<br>
+<strong>Rhypo_OpenQuake</strong>: Distancia hipocentral (distancia tridimensional desde la estación hasta el hipocentro).<br>
+<strong>Ry0_OpenQuake</strong>: Distancia perpendicular a la dirección de deslizamiento de la falla.<br>
+<strong>T_0.01_RotD50</strong>: Aceleración espectral en el período de 0.01 segundos utilizando la métrica RotD50.<br></p>
+<p>Se identifican las variables categóricas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">categorical_columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;EQID&#39;, &#39;Magnitude type&#39;,
+       &#39;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&#39;,
+       &#39;Style-of-Faulting (S; R; N; U)&#39;, &#39;Station ID&#39;, &#39;Station Code&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se eliminan algunas variables que no aportan para reducir la dimensión del dataframe.<br>
+En este caso el único valor que posee Magnitude type es Mw que indica la escala en la que se reportan los valores de las magnitudes de los sismos.<br>
+Así también se elimina la variable Record Sequence Number ya que presenta un conteo de la cantidad de sismos registrados. <br></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Magnitude type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Magnitude type
+Mw    8811
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Record Sequence Number&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Magnitude type&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Epicenter Latitude (deg; positive N)</th>
+      <td>8811.0</td>
+      <td>5.896834</td>
+      <td>3.759842</td>
+      <td>-4.825000</td>
+      <td>3.440000</td>
+      <td>6.535500</td>
+      <td>7.280000</td>
+      <td>13.260000</td>
+    </tr>
+    <tr>
+      <th>Epicenter Longitude (deg; positive E)</th>
+      <td>8811.0</td>
+      <td>-76.241968</td>
+      <td>2.851960</td>
+      <td>-81.260000</td>
+      <td>-78.290000</td>
+      <td>-76.040000</td>
+      <td>-73.280000</td>
+      <td>-67.973000</td>
+    </tr>
+    <tr>
+      <th>Hypocenter Depth (km)</th>
+      <td>8811.0</td>
+      <td>59.993065</td>
+      <td>62.345192</td>
+      <td>1.000000</td>
+      <td>10.000000</td>
+      <td>19.600000</td>
+      <td>132.000000</td>
+      <td>209.900000</td>
+    </tr>
+    <tr>
+      <th>Magnitude</th>
+      <td>8811.0</td>
+      <td>4.988405</td>
+      <td>0.675945</td>
+      <td>3.800000</td>
+      <td>4.500000</td>
+      <td>4.900000</td>
+      <td>5.260000</td>
+      <td>7.782200</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 1 Strike (deg)</th>
+      <td>8811.0</td>
+      <td>177.660651</td>
+      <td>106.265249</td>
+      <td>2.000000</td>
+      <td>88.000000</td>
+      <td>168.000000</td>
+      <td>265.000000</td>
+      <td>360.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 1 Dip (deg)</th>
+      <td>8811.0</td>
+      <td>58.328567</td>
+      <td>23.395038</td>
+      <td>1.000000</td>
+      <td>41.000000</td>
+      <td>65.000000</td>
+      <td>80.000000</td>
+      <td>90.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 1 Rake Angle (deg)</th>
+      <td>8811.0</td>
+      <td>13.555783</td>
+      <td>109.983810</td>
+      <td>-180.000000</td>
+      <td>-69.000000</td>
+      <td>20.000000</td>
+      <td>107.000000</td>
+      <td>180.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 2 Strike (deg)</th>
+      <td>8811.0</td>
+      <td>169.453978</td>
+      <td>108.282067</td>
+      <td>0.000000</td>
+      <td>71.000000</td>
+      <td>172.000000</td>
+      <td>258.000000</td>
+      <td>360.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 2 Dip (deg)</th>
+      <td>8811.0</td>
+      <td>68.298604</td>
+      <td>16.069385</td>
+      <td>14.000000</td>
+      <td>58.000000</td>
+      <td>69.000000</td>
+      <td>82.000000</td>
+      <td>90.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 2 Rake Angle (deg)</th>
+      <td>8811.0</td>
+      <td>18.638974</td>
+      <td>102.783054</td>
+      <td>-180.000000</td>
+      <td>-50.000000</td>
+      <td>18.000000</td>
+      <td>100.000000</td>
+      <td>177.000000</td>
+    </tr>
+    <tr>
+      <th>Fault Plane (1; 2; X)</th>
+      <td>8811.0</td>
+      <td>1.439905</td>
+      <td>0.496404</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>Station Latitude (deg positive N)</th>
+      <td>8811.0</td>
+      <td>4.999047</td>
+      <td>2.937833</td>
+      <td>-3.987000</td>
+      <td>2.722500</td>
+      <td>4.844900</td>
+      <td>6.591800</td>
+      <td>13.376000</td>
+    </tr>
+    <tr>
+      <th>Station Longitude (deg positive E)</th>
+      <td>8811.0</td>
+      <td>-75.512635</td>
+      <td>1.873769</td>
+      <td>-81.712000</td>
+      <td>-76.665900</td>
+      <td>-75.493800</td>
+      <td>-74.224500</td>
+      <td>-71.760600</td>
+    </tr>
+    <tr>
+      <th>Station Elevation (m)</th>
+      <td>8811.0</td>
+      <td>1192.790001</td>
+      <td>1107.902834</td>
+      <td>4.000000</td>
+      <td>234.000000</td>
+      <td>780.000000</td>
+      <td>1948.000000</td>
+      <td>4136.000000</td>
+    </tr>
+    <tr>
+      <th>Tmax</th>
+      <td>8811.0</td>
+      <td>15.733515</td>
+      <td>8.989414</td>
+      <td>2.000000</td>
+      <td>10.000000</td>
+      <td>16.000000</td>
+      <td>20.000000</td>
+      <td>80.000000</td>
+    </tr>
+    <tr>
+      <th>Valor_T1.5</th>
+      <td>8811.0</td>
+      <td>0.072432</td>
+      <td>0.085694</td>
+      <td>-1.000000</td>
+      <td>0.020000</td>
+      <td>0.050000</td>
+      <td>0.090000</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>Repi_OpenQuake</th>
+      <td>8811.0</td>
+      <td>518.426071</td>
+      <td>358.748110</td>
+      <td>2.139510</td>
+      <td>244.607352</td>
+      <td>436.508318</td>
+      <td>718.623355</td>
+      <td>1814.891470</td>
+    </tr>
+    <tr>
+      <th>Rjb_OpenQuake</th>
+      <td>8811.0</td>
+      <td>515.086428</td>
+      <td>358.596816</td>
+      <td>0.000000</td>
+      <td>241.544866</td>
+      <td>433.488276</td>
+      <td>716.066555</td>
+      <td>1806.111669</td>
+    </tr>
+    <tr>
+      <th>Rrup_OpenQuake</th>
+      <td>8811.0</td>
+      <td>527.362790</td>
+      <td>348.174102</td>
+      <td>12.535892</td>
+      <td>255.148038</td>
+      <td>440.219130</td>
+      <td>717.411885</td>
+      <td>1804.589468</td>
+    </tr>
+    <tr>
+      <th>Rx_OpenQuake</th>
+      <td>8811.0</td>
+      <td>-5.273488</td>
+      <td>417.646542</td>
+      <td>-1630.754422</td>
+      <td>-230.020199</td>
+      <td>-6.139455</td>
+      <td>217.880928</td>
+      <td>1691.271485</td>
+    </tr>
+    <tr>
+      <th>Rhypo_OpenQuake</th>
+      <td>8811.0</td>
+      <td>532.622440</td>
+      <td>348.911089</td>
+      <td>15.963300</td>
+      <td>260.111942</td>
+      <td>445.929503</td>
+      <td>722.371197</td>
+      <td>1814.924143</td>
+    </tr>
+    <tr>
+      <th>Ry0_OpenQuake</th>
+      <td>8811.0</td>
+      <td>349.665005</td>
+      <td>313.100583</td>
+      <td>0.000000</td>
+      <td>109.331234</td>
+      <td>268.678543</td>
+      <td>490.908865</td>
+      <td>1727.496966</td>
+    </tr>
+    <tr>
+      <th>T_0.01_RotD50</th>
+      <td>8811.0</td>
+      <td>2.929262</td>
+      <td>19.169845</td>
+      <td>0.000000</td>
+      <td>0.030424</td>
+      <td>0.148521</td>
+      <td>1.007054</td>
+      <td>874.803270</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EQID                                                                                        0
+Epicenter Latitude (deg; positive N)                                                        0
+Epicenter Longitude (deg; positive E)                                                       0
+Hypocenter Depth (km)                                                                       0
+Magnitude                                                                                   0
+Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)    0
+Nodal Plane 1 Strike (deg)                                                                  0
+Nodal Plane 1 Dip (deg)                                                                     0
+Nodal Plane 1 Rake Angle (deg)                                                              0
+Nodal Plane 2 Strike (deg)                                                                  0
+Nodal Plane 2 Dip (deg)                                                                     0
+Nodal Plane 2 Rake Angle (deg)                                                              0
+Fault Plane (1; 2; X)                                                                       0
+Style-of-Faulting (S; R; N; U)                                                              0
+Station ID                                                                                  0
+Station Code                                                                                0
+Station Latitude (deg positive N)                                                           0
+Station Longitude (deg positive E)                                                          0
+Station Elevation (m)                                                                       0
+Tmax                                                                                        0
+Valor_T1.5                                                                                  0
+Repi_OpenQuake                                                                              0
+Rjb_OpenQuake                                                                               0
+Rrup_OpenQuake                                                                              0
+Rx_OpenQuake                                                                                0
+Rhypo_OpenQuake                                                                             0
+Ry0_OpenQuake                                                                               0
+T_0.01_RotD50                                                                               0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Es necesario también remover aquellas filas que presentan aceleración = 0 ya que no son importantes para el estudio realizado.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;T_0.01_RotD50&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se hace uso de dos dataframes independientes como objetivo de comparar como se distribuyen las observaciones de las variables de forma original y haciendo uso de la transformación logarítmica.<br>
+Las transformaciones algunas veces son necesarias para ajustar el comportamiento de los datos de manera que un modelo de Machine Learning como KNN pueda intepretarlos de manera correcta.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_copy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Para el caso en particular de la variable de respuesta</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1"># 2 filas, 3 columnas</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Histogram with KDE of log(T_0.01_RotD50)&quot;</span><span class="p">)</span>
+
+<span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">dist</span><span class="o">=</span><span class="s2">&quot;norm&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Q-Q Plot of log(T_0.01_RotD50)&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot of log(T_0.01_RotD50)&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Histogram with KDE of T_0.01_RotD50&quot;</span><span class="p">)</span>
+
+<span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">dist</span><span class="o">=</span><span class="s2">&quot;norm&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Q-Q Plot of T_0.01_RotD50&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot of T_0.01_RotD50&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/79018da15c612a37f39d87f9e423c807d0aa09c9f8009b04fdc2a987af4a4d62.png" src="_images/79018da15c612a37f39d87f9e423c807d0aa09c9f8009b04fdc2a987af4a4d62.png" />
+</div>
+</div>
+<p>Se puede evidenciar como mejora notablemente la distribución de la variable.<br>
+A su vez, se logra identificar que existen datos atípicos en ambos grupos de datos que podrían afectar en las distribuciones.<br>
+A partir de este punto se trabajará con el logaritmo de la aceleración espectral<br></p>
+<p>Es importante mencionar que en estudios anteriores también se ha realizado la transformación usando logaritmo natural tal como lo describe esta ecuación extraída de</p>
+<div class="math notranslate nohighlight">
+\[
+\ln(\text{Sa}_{\text{RotD50}}) = \theta_1 + f_{\text{mag}}(M)_{\text{GL}} + f_{\text{mag}}(M)_{\text{REG}} 
++ f_{\text{path}}(M,R)_{\text{GL}} + f_{\text{path}}(R)_{\text{REG}} 
++ f_{\text{soil}}(S_{\text{cat}}, P^*)_{\text{REG}} + f_{\text{FABA}} + f_{Z_{\text{hypo}}}
+\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(\text{Sa}_{\text{RotD50}}\)</span> es la aceleración espectral</p>
+<ul>
+<li><p><strong>Análisis univariado</strong><br></p>
+<ul>
+<li><p><strong>Asimetría</strong><br><br></p>
+<p><strong>skew = 0</strong>: Distribución simétrica <br>
+<strong>skew &gt; 0</strong>: Distribuido hacia cola izquierda (sesgo positivo).<br>
+<strong>skew &lt; 0</strong>: Distribuido hacia cola derecha (sesgo negativo).<br><br></p>
+</li>
+<li><p><strong>Kurtosis</strong>: Forma de la distribución<br><br></p>
+<p><strong>kurtosis = 3 (Mesocúrtica)</strong>: Distribución normal.<br>
+<strong>kurtosis &lt; 3 (Platicúrtica)</strong>: Distribución con colas menos gruesas que la normal.<br>
+<strong>kurtosis &gt; 3 (leptocúrtica)</strong>: Distribución con colas más gruesas que la normal y con mayores valores atípicos<br></p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">font_scale</span><span class="o">=</span><span class="mf">1.4</span><span class="p">)</span>
+<span class="n">num_cols</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Column: &#39;</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Skew:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Kurtosis: &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">df_copy</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Epicenter Latitude (deg; positive N)
+Skew: 0.14
+Kurtosis:  0.03
+</pre></div>
+</div>
+<img alt="_images/320a1ac3505e290a9f6688760516227b1bac3b5001ba44535071a4ab5a3a7a2b.png" src="_images/320a1ac3505e290a9f6688760516227b1bac3b5001ba44535071a4ab5a3a7a2b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Epicenter Longitude (deg; positive E)
+Skew: -0.31
+Kurtosis:  -1.02
+</pre></div>
+</div>
+<img alt="_images/5c2e73a4dd17dfbb463cd35534eefd673ceecb9cd8bdfb015438afd7a005fd0d.png" src="_images/5c2e73a4dd17dfbb463cd35534eefd673ceecb9cd8bdfb015438afd7a005fd0d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Hypocenter Depth (km)
+Skew: 0.72
+Kurtosis:  -1.21
+</pre></div>
+</div>
+<img alt="_images/5db3d8c9549a5543fd84fdf4371d0f0d7306b997dbd3d26e3761d70eba48c078.png" src="_images/5db3d8c9549a5543fd84fdf4371d0f0d7306b997dbd3d26e3761d70eba48c078.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Magnitude
+Skew: 1.24
+Kurtosis:  2.12
+</pre></div>
+</div>
+<img alt="_images/29858e399ad3c8e84d90961f48f10f93da962ef8c6b03ac380085b148138bb74.png" src="_images/29858e399ad3c8e84d90961f48f10f93da962ef8c6b03ac380085b148138bb74.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Nodal Plane 1 Strike (deg)
+Skew: 0.09
+Kurtosis:  -1.15
+</pre></div>
+</div>
+<img alt="_images/f7c2907336826e6aae242037f972872300fdada1dd84892bd4453458493c9f99.png" src="_images/f7c2907336826e6aae242037f972872300fdada1dd84892bd4453458493c9f99.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Nodal Plane 1 Dip (deg)
+Skew: -0.47
+Kurtosis:  -0.95
+</pre></div>
+</div>
+<img alt="_images/29644f244659374d1d560e8b4b84ca8d8e90153be689466ba60a37295c413162.png" src="_images/29644f244659374d1d560e8b4b84ca8d8e90153be689466ba60a37295c413162.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Nodal Plane 1 Rake Angle (deg)
+Skew: -0.21
+Kurtosis:  -1.06
+</pre></div>
+</div>
+<img alt="_images/7a61b90475946032989da62501e292bc2fa94e60986640e79c5457654885cd67.png" src="_images/7a61b90475946032989da62501e292bc2fa94e60986640e79c5457654885cd67.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Nodal Plane 2 Strike (deg)
+Skew: 0.08
+Kurtosis:  -1.23
+</pre></div>
+</div>
+<img alt="_images/26735101a1749dc0a913ab6373dfc5185a5646ff11c0d0c114d9381ac01df08d.png" src="_images/26735101a1749dc0a913ab6373dfc5185a5646ff11c0d0c114d9381ac01df08d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Nodal Plane 2 Dip (deg)
+Skew: -0.82
+Kurtosis:  0.54
+</pre></div>
+</div>
+<img alt="_images/0afb85ffe41e2725d02c2d113bb1b87c0d75de07b4fa186928bc84f7f8f34a11.png" src="_images/0afb85ffe41e2725d02c2d113bb1b87c0d75de07b4fa186928bc84f7f8f34a11.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Nodal Plane 2 Rake Angle (deg)
+Skew: -0.24
+Kurtosis:  -0.92
+</pre></div>
+</div>
+<img alt="_images/78af915276074711a2d0a92542043276777279cf009e4f1dd05436a361223082.png" src="_images/78af915276074711a2d0a92542043276777279cf009e4f1dd05436a361223082.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Fault Plane (1; 2; X)
+Skew: 0.24
+Kurtosis:  -1.94
+</pre></div>
+</div>
+<img alt="_images/1d7639decaa755633e799e16ec163c83c5ddb22b4d51471a782d0ad6e442aca4.png" src="_images/1d7639decaa755633e799e16ec163c83c5ddb22b4d51471a782d0ad6e442aca4.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Station Latitude (deg positive N)
+Skew: 0.6
+Kurtosis:  0.2
+</pre></div>
+</div>
+<img alt="_images/22e41b6d6d9f453a1a97f9a29ce0b34e466aeebdf43dfe087be0134cc38d9f77.png" src="_images/22e41b6d6d9f453a1a97f9a29ce0b34e466aeebdf43dfe087be0134cc38d9f77.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Station Longitude (deg positive E)
+Skew: -0.43
+Kurtosis:  0.73
+</pre></div>
+</div>
+<img alt="_images/ea3b4d34d42edd8f1ca6e0cf086e218611407fddab001d873966e36b1233453d.png" src="_images/ea3b4d34d42edd8f1ca6e0cf086e218611407fddab001d873966e36b1233453d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Station Elevation (m)
+Skew: 0.93
+Kurtosis:  -0.21
+</pre></div>
+</div>
+<img alt="_images/59447fa56a503807434cc7b59abc06041dfc161cf1469849c03e043f62e75da7.png" src="_images/59447fa56a503807434cc7b59abc06041dfc161cf1469849c03e043f62e75da7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Tmax
+Skew: 1.23
+Kurtosis:  6.57
+</pre></div>
+</div>
+<img alt="_images/2bf5bca1badbd3865e6af12af2f7d27efe925d417d62bfba72961cf9d64fdc9d.png" src="_images/2bf5bca1badbd3865e6af12af2f7d27efe925d417d62bfba72961cf9d64fdc9d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Valor_T1.5
+Skew: 2.95
+Kurtosis:  60.82
+</pre></div>
+</div>
+<img alt="_images/6865dc339129379ee9d5b188fa216c26aa898a3daf007cabedf3144200e00b90.png" src="_images/6865dc339129379ee9d5b188fa216c26aa898a3daf007cabedf3144200e00b90.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Repi_OpenQuake
+Skew: 0.93
+Kurtosis:  0.24
+</pre></div>
+</div>
+<img alt="_images/8f837bc8afc209859c4b2fde5e20f2511cb108272c3f76c740f53842b728bdc6.png" src="_images/8f837bc8afc209859c4b2fde5e20f2511cb108272c3f76c740f53842b728bdc6.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Rjb_OpenQuake
+Skew: 0.92
+Kurtosis:  0.22
+</pre></div>
+</div>
+<img alt="_images/2c0d1701a59974bed1513c4633d9d80758e04bcdbbc7a0374e1c42bfc749535b.png" src="_images/2c0d1701a59974bed1513c4633d9d80758e04bcdbbc7a0374e1c42bfc749535b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Rrup_OpenQuake
+Skew: 0.99
+Kurtosis:  0.33
+</pre></div>
+</div>
+<img alt="_images/ae58d4dc12a6c55f3acbcd99091cc80c7427d1cf0c64bba135dcbaf455c20b5d.png" src="_images/ae58d4dc12a6c55f3acbcd99091cc80c7427d1cf0c64bba135dcbaf455c20b5d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Rx_OpenQuake
+Skew: -0.17
+Kurtosis:  1.49
+</pre></div>
+</div>
+<img alt="_images/e12bc8fcdbdb7c201380630515285402e89cdf88b7bfccad4e3b34b2d529bf21.png" src="_images/e12bc8fcdbdb7c201380630515285402e89cdf88b7bfccad4e3b34b2d529bf21.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Rhypo_OpenQuake
+Skew: 0.99
+Kurtosis:  0.34
+</pre></div>
+</div>
+<img alt="_images/dcf961cb3191a6d2baf56424c06d9b981a9f1eec390e1d65b4d0cbf6d06810fd.png" src="_images/dcf961cb3191a6d2baf56424c06d9b981a9f1eec390e1d65b4d0cbf6d06810fd.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Ry0_OpenQuake
+Skew: 1.37
+Kurtosis:  1.76
+</pre></div>
+</div>
+<img alt="_images/6f0be98f592dfd2b6b18ed55af2066a53222f0459bf404889a9e270a13060ca8.png" src="_images/6f0be98f592dfd2b6b18ed55af2066a53222f0459bf404889a9e270a13060ca8.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  T_0.01_RotD50
+Skew: 0.33
+Kurtosis:  -0.44
+</pre></div>
+</div>
+<img alt="_images/3c08095028dcb20eee4fb4bb1294c32dc26a8658fd8dc52fe53e3bfc551bad38.png" src="_images/3c08095028dcb20eee4fb4bb1294c32dc26a8658fd8dc52fe53e3bfc551bad38.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Variables categóricas</strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span> 
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot of log(T_0.01_RotD50) by Tectonic environment&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Count Plot of Categorical Variable&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/39792ce0a95d5bd0e8fb0f65ccdab79c726a4689c35c95770b3eabeada73f9ff.png" src="_images/39792ce0a95d5bd0e8fb0f65ccdab79c726a4689c35c95770b3eabeada73f9ff.png" />
+</div>
+</div>
+<p>There is a lot more that you can do with outputs (such as including interactive outputs)
+with your book. For more information about this, see <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Machine Learning into the Civil Engineering</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos-eda">1. Análisis Exploratorio de datos  (EDA)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
