@@ -381,7 +381,7 @@
 Los modelos anteriores (NoSAm GMMs) permitieron la estimación de la aceleración espectral con 5% de amortiguamiento en diferentes entornos tectónicos.
 Para ello, se utilizará una base de datos regional con aproximadamente 8800 observaciones recogidas por el Servicio Geológico Colombiano el cual incluye registros de Ecuador y Colombia. A partir de allí se compararán modelos tradicionales de Machine Learning (como KNN, regresión Ridge y Lasso, SVM y XGBoost) con un modelo original de stacking basado en modelos de XGBoost y LightGBM, con el objetivo de mejorar la precisión de predicción respecto a estudios previos y a su vez comparar las métricas generales con los modelos preliminares.</p>
 <p><strong>Palabras clave</strong>:
-ingeniería sismica, aceleración espectral, Machine Learning, predicción, riesgos, vulnerabilidad, desastres naturales, periodo</p>
+ingeniería sismica, aceleración, Machine Learning, predicción, riesgos, vulnerabilidad, desastres naturales</p>
 <section id="analisis-exploratorio-de-datos-eda">
 <h2>1. Análisis Exploratorio de datos  (EDA)<a class="headerlink" href="#analisis-exploratorio-de-datos-eda" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
@@ -777,6 +777,7 @@ memory usage: 2.0+ MB
 </div>
 </div>
 <p><strong>Identificación de cada variable del conjunto de datos</strong><br><br>
+<strong>Record Sequence Number</strong>:índice del sismo en el grupo de datos<br>
 <strong>EQID</strong>: Identificador único del evento sísmico.<br>
 <strong>Epicenter Latitude (deg; positive N)</strong>: Latitud del epicentro en grados (positiva hacia el norte).<br>
 <strong>Epicenter Longitude (deg; positive E)</strong>: Longitud del epicentro en grados (positiva hacia el este).<br>
@@ -797,8 +798,8 @@ memory usage: 2.0+ MB
 <strong>Station Latitude (deg positive N)</strong>: Latitud de la estación sísmica en grados (positiva hacia el norte).<br>
 <strong>Station Longitude (deg positive E)</strong>: Longitud de la estación sísmica en grados (positiva hacia el este).<br>
 <strong>Station Elevation (m)</strong>: Elevación de la estación sísmica en metros.<br>
-<strong>Tmax</strong>: Valor máximo del período de vibración analizado.<br>
-<strong>Valor_T1.5</strong>: Valor del parámetro sísmico en el período de 1.5 segundos.<br>
+<strong>Tmax</strong>: Valor máximo de período válido.<br>
+<strong>Valor_T1.5</strong>: Periodo en que el valor de aceptación es 1.5 veces el valor de T0.01<br>
 <strong>Repi_OpenQuake</strong>: Distancia epicentral (distancia horizontal desde el epicentro a la estación).<br>
 <strong>Rjb_OpenQuake</strong>: Distancia de Joyner-Boore (distancia horizontal desde la estación a la proyección de la falla).<br>
 <strong>Rrup_OpenQuake</strong>: Distancia de ruptura (distancia mínima entre la estación y la superficie de la falla).<br>
@@ -823,9 +824,78 @@ memory usage: 2.0+ MB
 </div>
 </div>
 </div>
-<p>Se eliminan algunas variables que no aportan para reducir la dimensión del dataframe.<br>
-En este caso el único valor que posee Magnitude type es Mw que indica la escala en la que se reportan los valores de las magnitudes de los sismos.<br>
-Así también se elimina la variable Record Sequence Number ya que presenta un conteo de la cantidad de sismos registrados. <br></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;EQID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EQID
+CO_20150310205544    86
+CO_20191224190352    62
+CO_20190126123226    61
+CO_20180923043745    60
+CO_20191224201114    60
+                     ..
+CO_20060124021544     1
+CO_20060129174914     1
+CO_20010908224510     1
+CO_19980623013633     1
+CO_19950423235543     1
+Name: count, Length: 267, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Station ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Station ID
+RNAC_253    171
+RNAC_274    171
+RNAC_244    170
+RNAC_333    165
+RNAC_176    160
+           ... 
+RNAC_216      1
+RNAC_215      1
+RNAC_213      1
+RNAC_199      1
+RNAC_302      1
+Name: count, Length: 270, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Station Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Station Code
+MAN1C    171
+NOR      171
+FLO2     170
+YOT      165
+CRU      160
+        ... 
+CUAGR      1
+CTVCA      1
+CTUNA      1
+CTEJE      1
+RAC11      1
+Name: count, Length: 270, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Magnitude type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -840,10 +910,29 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
+<p>Se eliminan algunas variables que no aportan para reducir la dimensión del dataframe.<br><br>
+<strong>Magnitude Type</strong>: Se elimina esta variable ya que la única escala que se usa para la magnitud del sismo en el grupo de datos presentado es la escala de Magnitud de Momentos (Mw).<br>
+<strong>Record Sequence Number</strong>: Se elimina ya que representa la posición del sismo en el grupo de datos. <br>
+<strong>EQID</strong>: Se elimina el identificador del evento sísmico ya que no representa gran información y tiene 267 categorías disponibles lo que complicará los modelos.<br>
+<strong>Station ID</strong>: Se elimina el identificador de la estación que realizó la medición ya que no representa gran información con 270 categorías disponibles<br>
+<strong>Station Code</strong>: Se elimina el código de la estación que realizó la medición ya que no representa gran información con 270 categorías disponibles<br>
+<strong>Tmax</strong>: Se elimina ya que representa el periodo máximo válido para estimar. En el caso de este informe, el periodo es 0.01s menor que 2s el cuál es el menor valor del grupo de datos de Tmax.<br></p>
+<p>Las variables: <strong>Epicenter Latitude (deg; positive N)</strong>, <strong>Epicenter Longitude (deg; positive E)</strong>, <strong>Station Latitude (deg positive N)</strong>,<strong>Station Longitude (deg positive E)</strong> son eliminadas ya que todas son valores referentes a una ubicación. Usando ecuaciones como la de Haversine se puede obtener la distancia entre los dos puntos, convirtiendo estas variables menos representativas que la distancia desde la estación hacia el epicentro (Repi_OpenQuake).</p>
+<p><strong>Valor_T1.5</strong>: Se elimina ya que este parámetro es calculado a partir de la variable respuesta T_0.01_RotD50 lo que conllevará a que de cierta manera estén relacionados, pero no funcionará como variable predictora.<br><br></p>
+<p>Es importante destacar que al eliminar variables que podrían producir “ruido” se disminuye la dimensionalidad del grupo de datos para que sean mejor procesados.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Record Sequence Number&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Station ID&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Station Code&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Magnitude type&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;EQID&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Valor_T1.5&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Tmax&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Epicenter Latitude (deg; positive N)&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Epicenter Longitude (deg; positive E)&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Station Latitude (deg positive N)&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Station Longitude (deg positive E)&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -884,28 +973,6 @@ Name: count, dtype: int64
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th>Epicenter Latitude (deg; positive N)</th>
-      <td>8811.0</td>
-      <td>5.896834</td>
-      <td>3.759842</td>
-      <td>-4.825000</td>
-      <td>3.440000</td>
-      <td>6.535500</td>
-      <td>7.280000</td>
-      <td>13.260000</td>
-    </tr>
-    <tr>
-      <th>Epicenter Longitude (deg; positive E)</th>
-      <td>8811.0</td>
-      <td>-76.241968</td>
-      <td>2.851960</td>
-      <td>-81.260000</td>
-      <td>-78.290000</td>
-      <td>-76.040000</td>
-      <td>-73.280000</td>
-      <td>-67.973000</td>
-    </tr>
     <tr>
       <th>Hypocenter Depth (km)</th>
       <td>8811.0</td>
@@ -1006,28 +1073,6 @@ Name: count, dtype: int64
       <td>2.000000</td>
     </tr>
     <tr>
-      <th>Station Latitude (deg positive N)</th>
-      <td>8811.0</td>
-      <td>4.999047</td>
-      <td>2.937833</td>
-      <td>-3.987000</td>
-      <td>2.722500</td>
-      <td>4.844900</td>
-      <td>6.591800</td>
-      <td>13.376000</td>
-    </tr>
-    <tr>
-      <th>Station Longitude (deg positive E)</th>
-      <td>8811.0</td>
-      <td>-75.512635</td>
-      <td>1.873769</td>
-      <td>-81.712000</td>
-      <td>-76.665900</td>
-      <td>-75.493800</td>
-      <td>-74.224500</td>
-      <td>-71.760600</td>
-    </tr>
-    <tr>
       <th>Station Elevation (m)</th>
       <td>8811.0</td>
       <td>1192.790001</td>
@@ -1037,28 +1082,6 @@ Name: count, dtype: int64
       <td>780.000000</td>
       <td>1948.000000</td>
       <td>4136.000000</td>
-    </tr>
-    <tr>
-      <th>Tmax</th>
-      <td>8811.0</td>
-      <td>15.733515</td>
-      <td>8.989414</td>
-      <td>2.000000</td>
-      <td>10.000000</td>
-      <td>16.000000</td>
-      <td>20.000000</td>
-      <td>80.000000</td>
-    </tr>
-    <tr>
-      <th>Valor_T1.5</th>
-      <td>8811.0</td>
-      <td>0.072432</td>
-      <td>0.085694</td>
-      <td>-1.000000</td>
-      <td>0.020000</td>
-      <td>0.050000</td>
-      <td>0.090000</td>
-      <td>2.000000</td>
     </tr>
     <tr>
       <th>Repi_OpenQuake</th>
@@ -1148,10 +1171,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EQID                                                                                        0
-Epicenter Latitude (deg; positive N)                                                        0
-Epicenter Longitude (deg; positive E)                                                       0
-Hypocenter Depth (km)                                                                       0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hypocenter Depth (km)                                                                       0
 Magnitude                                                                                   0
 Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)    0
 Nodal Plane 1 Strike (deg)                                                                  0
@@ -1162,13 +1182,7 @@ Nodal Plane 2 Dip (deg)                                                         
 Nodal Plane 2 Rake Angle (deg)                                                              0
 Fault Plane (1; 2; X)                                                                       0
 Style-of-Faulting (S; R; N; U)                                                              0
-Station ID                                                                                  0
-Station Code                                                                                0
-Station Latitude (deg positive N)                                                           0
-Station Longitude (deg positive E)                                                          0
 Station Elevation (m)                                                                       0
-Tmax                                                                                        0
-Valor_T1.5                                                                                  0
 Repi_OpenQuake                                                                              0
 Rjb_OpenQuake                                                                               0
 Rrup_OpenQuake                                                                              0
@@ -1205,28 +1219,255 @@ Las transformaciones algunas veces son necesarias para ajustar el comportamiento
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_copy</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Hypocenter Depth (km)</th>
+      <td>8809.0</td>
+      <td>60.004416</td>
+      <td>62.347718</td>
+      <td>1.000000</td>
+      <td>10.000000</td>
+      <td>20.000000</td>
+      <td>132.000000</td>
+      <td>209.900000</td>
+    </tr>
+    <tr>
+      <th>Magnitude</th>
+      <td>8809.0</td>
+      <td>4.988410</td>
+      <td>0.676019</td>
+      <td>3.800000</td>
+      <td>4.500000</td>
+      <td>4.900000</td>
+      <td>5.260000</td>
+      <td>7.782200</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 1 Strike (deg)</th>
+      <td>8809.0</td>
+      <td>177.646838</td>
+      <td>106.261691</td>
+      <td>2.000000</td>
+      <td>88.000000</td>
+      <td>168.000000</td>
+      <td>265.000000</td>
+      <td>360.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 1 Dip (deg)</th>
+      <td>8809.0</td>
+      <td>58.327165</td>
+      <td>23.395052</td>
+      <td>1.000000</td>
+      <td>41.000000</td>
+      <td>65.000000</td>
+      <td>80.000000</td>
+      <td>90.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 1 Rake Angle (deg)</th>
+      <td>8809.0</td>
+      <td>13.527075</td>
+      <td>109.978298</td>
+      <td>-180.000000</td>
+      <td>-69.000000</td>
+      <td>20.000000</td>
+      <td>107.000000</td>
+      <td>180.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 2 Strike (deg)</th>
+      <td>8809.0</td>
+      <td>169.450335</td>
+      <td>108.280821</td>
+      <td>0.000000</td>
+      <td>71.000000</td>
+      <td>172.000000</td>
+      <td>258.000000</td>
+      <td>360.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 2 Dip (deg)</th>
+      <td>8809.0</td>
+      <td>68.298558</td>
+      <td>16.068522</td>
+      <td>14.000000</td>
+      <td>58.000000</td>
+      <td>69.000000</td>
+      <td>82.000000</td>
+      <td>90.000000</td>
+    </tr>
+    <tr>
+      <th>Nodal Plane 2 Rake Angle (deg)</th>
+      <td>8809.0</td>
+      <td>18.633897</td>
+      <td>102.792576</td>
+      <td>-180.000000</td>
+      <td>-50.000000</td>
+      <td>18.000000</td>
+      <td>100.000000</td>
+      <td>177.000000</td>
+    </tr>
+    <tr>
+      <th>Fault Plane (1; 2; X)</th>
+      <td>8809.0</td>
+      <td>1.440005</td>
+      <td>0.496416</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>Station Elevation (m)</th>
+      <td>8809.0</td>
+      <td>1192.927767</td>
+      <td>1107.990874</td>
+      <td>4.000000</td>
+      <td>234.000000</td>
+      <td>780.000000</td>
+      <td>1948.000000</td>
+      <td>4136.000000</td>
+    </tr>
+    <tr>
+      <th>Repi_OpenQuake</th>
+      <td>8809.0</td>
+      <td>518.287674</td>
+      <td>358.644620</td>
+      <td>2.139510</td>
+      <td>244.547715</td>
+      <td>436.488453</td>
+      <td>718.121614</td>
+      <td>1814.891470</td>
+    </tr>
+    <tr>
+      <th>Rjb_OpenQuake</th>
+      <td>8809.0</td>
+      <td>514.948161</td>
+      <td>358.493624</td>
+      <td>0.000000</td>
+      <td>241.541484</td>
+      <td>433.272980</td>
+      <td>715.996061</td>
+      <td>1806.111669</td>
+    </tr>
+    <tr>
+      <th>Rrup_OpenQuake</th>
+      <td>8809.0</td>
+      <td>527.227522</td>
+      <td>348.070661</td>
+      <td>12.535892</td>
+      <td>255.135433</td>
+      <td>440.193666</td>
+      <td>717.137495</td>
+      <td>1804.589468</td>
+    </tr>
+    <tr>
+      <th>Rx_OpenQuake</th>
+      <td>8809.0</td>
+      <td>-5.348640</td>
+      <td>417.649621</td>
+      <td>-1630.754422</td>
+      <td>-230.031669</td>
+      <td>-6.358898</td>
+      <td>217.860098</td>
+      <td>1691.271485</td>
+    </tr>
+    <tr>
+      <th>Rhypo_OpenQuake</th>
+      <td>8809.0</td>
+      <td>532.487252</td>
+      <td>348.807960</td>
+      <td>15.963300</td>
+      <td>260.105496</td>
+      <td>445.814200</td>
+      <td>722.325946</td>
+      <td>1814.924143</td>
+    </tr>
+    <tr>
+      <th>Ry0_OpenQuake</th>
+      <td>8809.0</td>
+      <td>349.513260</td>
+      <td>312.917566</td>
+      <td>0.000000</td>
+      <td>109.324233</td>
+      <td>268.673176</td>
+      <td>490.453078</td>
+      <td>1727.496966</td>
+    </tr>
+    <tr>
+      <th>T_0.01_RotD50</th>
+      <td>8809.0</td>
+      <td>-1.670185</td>
+      <td>2.332732</td>
+      <td>-12.366241</td>
+      <td>-3.491755</td>
+      <td>-1.905817</td>
+      <td>0.007283</td>
+      <td>6.773999</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <p>Para el caso en particular de la variable de respuesta</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1"># 2 filas, 3 columnas</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1"># 2 filas, 3 columnas</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Histogram with KDE of log(T_0.01_RotD50)&quot;</span><span class="p">)</span>
 
-<span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">dist</span><span class="o">=</span><span class="s2">&quot;norm&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Q-Q Plot of log(T_0.01_RotD50)&quot;</span><span class="p">)</span>
+<span class="c1">##stats.probplot(df_copy[&quot;T_0.01_RotD50&quot;], dist=&quot;norm&quot;, plot=axes[0][1])</span>
+<span class="c1">##axes[0][1].set_title(&quot;Q-Q Plot of log(T_0.01_RotD50)&quot;)</span>
 
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot of log(T_0.01_RotD50)&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot of log(T_0.01_RotD50)&quot;</span><span class="p">)</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Histogram with KDE of T_0.01_RotD50&quot;</span><span class="p">)</span>
 
-<span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">dist</span><span class="o">=</span><span class="s2">&quot;norm&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Q-Q Plot of T_0.01_RotD50&quot;</span><span class="p">)</span>
+<span class="c1">##stats.probplot(df[&quot;T_0.01_RotD50&quot;], dist=&quot;norm&quot;, plot=axes[1][1])</span>
+<span class="c1">##axes[1][1].set_title(&quot;Q-Q Plot of T_0.01_RotD50&quot;)</span>
 
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot of T_0.01_RotD50&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot of T_0.01_RotD50&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1234,7 +1475,7 @@ Las transformaciones algunas veces son necesarias para ajustar el comportamiento
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/79018da15c612a37f39d87f9e423c807d0aa09c9f8009b04fdc2a987af4a4d62.png" src="_images/79018da15c612a37f39d87f9e423c807d0aa09c9f8009b04fdc2a987af4a4d62.png" />
+<img alt="_images/36a87c8316aaffa49f02ed13156f23d5de70fa9056158f8f8b074ac1b5a01e3e.png" src="_images/36a87c8316aaffa49f02ed13156f23d5de70fa9056158f8f8b074ac1b5a01e3e.png" />
 </div>
 </div>
 <p>Se puede evidenciar como mejora notablemente la distribución de la variable.<br>
@@ -1268,6 +1509,7 @@ A partir de este punto se trabajará con el logaritmo de la aceleración espectr
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">font_scale</span><span class="o">=</span><span class="mf">1.4</span><span class="p">)</span>
 <span class="n">num_cols</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">num_cols</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Fault Plane (1; 2; X)&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Column: &#39;</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Skew:&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">(),</span> <span class="mi">2</span><span class="p">))</span>
@@ -1282,18 +1524,6 @@ A partir de este punto se trabajará con el logaritmo de la aceleración espectr
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Epicenter Latitude (deg; positive N)
-Skew: 0.14
-Kurtosis:  0.03
-</pre></div>
-</div>
-<img alt="_images/320a1ac3505e290a9f6688760516227b1bac3b5001ba44535071a4ab5a3a7a2b.png" src="_images/320a1ac3505e290a9f6688760516227b1bac3b5001ba44535071a4ab5a3a7a2b.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Epicenter Longitude (deg; positive E)
-Skew: -0.31
-Kurtosis:  -1.02
-</pre></div>
-</div>
-<img alt="_images/5c2e73a4dd17dfbb463cd35534eefd673ceecb9cd8bdfb015438afd7a005fd0d.png" src="_images/5c2e73a4dd17dfbb463cd35534eefd673ceecb9cd8bdfb015438afd7a005fd0d.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Hypocenter Depth (km)
 Skew: 0.72
 Kurtosis:  -1.21
@@ -1342,42 +1572,12 @@ Kurtosis:  -0.92
 </pre></div>
 </div>
 <img alt="_images/78af915276074711a2d0a92542043276777279cf009e4f1dd05436a361223082.png" src="_images/78af915276074711a2d0a92542043276777279cf009e4f1dd05436a361223082.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Fault Plane (1; 2; X)
-Skew: 0.24
-Kurtosis:  -1.94
-</pre></div>
-</div>
-<img alt="_images/1d7639decaa755633e799e16ec163c83c5ddb22b4d51471a782d0ad6e442aca4.png" src="_images/1d7639decaa755633e799e16ec163c83c5ddb22b4d51471a782d0ad6e442aca4.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Station Latitude (deg positive N)
-Skew: 0.6
-Kurtosis:  0.2
-</pre></div>
-</div>
-<img alt="_images/22e41b6d6d9f453a1a97f9a29ce0b34e466aeebdf43dfe087be0134cc38d9f77.png" src="_images/22e41b6d6d9f453a1a97f9a29ce0b34e466aeebdf43dfe087be0134cc38d9f77.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Station Longitude (deg positive E)
-Skew: -0.43
-Kurtosis:  0.73
-</pre></div>
-</div>
-<img alt="_images/ea3b4d34d42edd8f1ca6e0cf086e218611407fddab001d873966e36b1233453d.png" src="_images/ea3b4d34d42edd8f1ca6e0cf086e218611407fddab001d873966e36b1233453d.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Station Elevation (m)
 Skew: 0.93
 Kurtosis:  -0.21
 </pre></div>
 </div>
 <img alt="_images/59447fa56a503807434cc7b59abc06041dfc161cf1469849c03e043f62e75da7.png" src="_images/59447fa56a503807434cc7b59abc06041dfc161cf1469849c03e043f62e75da7.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Tmax
-Skew: 1.23
-Kurtosis:  6.57
-</pre></div>
-</div>
-<img alt="_images/2bf5bca1badbd3865e6af12af2f7d27efe925d417d62bfba72961cf9d64fdc9d.png" src="_images/2bf5bca1badbd3865e6af12af2f7d27efe925d417d62bfba72961cf9d64fdc9d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Valor_T1.5
-Skew: 2.95
-Kurtosis:  60.82
-</pre></div>
-</div>
-<img alt="_images/6865dc339129379ee9d5b188fa216c26aa898a3daf007cabedf3144200e00b90.png" src="_images/6865dc339129379ee9d5b188fa216c26aa898a3daf007cabedf3144200e00b90.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Column:  Repi_OpenQuake
 Skew: 0.93
 Kurtosis:  0.24
@@ -1422,23 +1622,353 @@ Kurtosis:  -0.44
 <img alt="_images/3c08095028dcb20eee4fb4bb1294c32dc26a8658fd8dc52fe53e3bfc551bad38.png" src="_images/3c08095028dcb20eee4fb4bb1294c32dc26a8658fd8dc52fe53e3bfc551bad38.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">kstest</span><span class="p">,</span> <span class="n">norm</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">kolmogorov_smirnov_test</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">columns</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;Fault Plane (1; 2; X)&quot;</span><span class="p">)</span>
+    <span class="n">p_values</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">names</span> <span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Normalizar</span>
+            <span class="n">standardized_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">data</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+            <span class="n">ks_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">kstest</span><span class="p">(</span><span class="n">standardized_data</span><span class="p">,</span> <span class="s1">&#39;norm&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="n">col</span><span class="p">,</span> <span class="s1">&#39;KS Statistic&#39;</span><span class="p">:</span> <span class="n">ks_stat</span><span class="p">,</span> <span class="s1">&#39;p-value&#39;</span><span class="p">:</span> <span class="n">p_value</span><span class="p">})</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">p_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_value</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">),</span><span class="n">names</span><span class="p">,</span><span class="n">p_values</span>
+
+<span class="n">resultado</span><span class="p">,</span><span class="n">nombres</span><span class="p">,</span><span class="n">pvalores</span> <span class="o">=</span> <span class="n">kolmogorov_smirnov_test</span><span class="p">(</span><span class="n">df_copy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                          Variable  KS Statistic        p-value
+0            Hypocenter Depth (km)      0.254774   0.000000e+00
+1                        Magnitude      0.129951  3.677782e-130
+2       Nodal Plane 1 Strike (deg)      0.081943   6.680816e-52
+3          Nodal Plane 1 Dip (deg)      0.117494  2.069786e-106
+4   Nodal Plane 1 Rake Angle (deg)      0.068879   8.769340e-37
+5       Nodal Plane 2 Strike (deg)      0.091867   3.806220e-65
+6          Nodal Plane 2 Dip (deg)      0.092462   5.459749e-66
+7   Nodal Plane 2 Rake Angle (deg)      0.070802   7.629744e-39
+8            Station Elevation (m)      0.168082  5.208410e-218
+9                   Repi_OpenQuake      0.096788   2.797712e-72
+10                   Rjb_OpenQuake      0.096649   4.497925e-72
+11                  Rrup_OpenQuake      0.103972   2.287109e-83
+12                    Rx_OpenQuake      0.048138   3.534486e-18
+13                 Rhypo_OpenQuake      0.103305   2.650503e-82
+14                   Ry0_OpenQuake      0.132008  2.575901e-134
+15                   T_0.01_RotD50      0.053501   2.351302e-22
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_p_values</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">p_values</span><span class="p">):</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">p_values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Threshold (0.05)&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;p-value (log scale)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Variables&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Kolmogorov-Smirnov Test p-values&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>  <span class="c1"># escala log</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">p_values</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>  <span class="c1"># limites</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span> 
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="n">plot_p_values</span><span class="p">(</span><span class="n">nombres</span><span class="p">,</span> <span class="n">pvalores</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/48cbe22a08af68507e722e9765d800dd78f4cf448b0613cd9b0d7e1b2083018b.png" src="_images/48cbe22a08af68507e722e9765d800dd78f4cf448b0613cd9b0d7e1b2083018b.png" />
+</div>
+</div>
 <ul class="simple">
 <li><p><strong>Variables categóricas</strong></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span> 
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Boxplot of log(T_0.01_RotD50) by Tectonic environment&quot;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Count Plot of Categorical Variable&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/39792ce0a95d5bd0e8fb0f65ccdab79c726a4689c35c95770b3eabeada73f9ff.png" src="_images/39792ce0a95d5bd0e8fb0f65ccdab79c726a4689c35c95770b3eabeada73f9ff.png" />
+<img alt="_images/3cc19c3b0ac46c74dd11364ce1502e7abed7cbfb338d09bf5f24e06880490b90.png" src="_images/3cc19c3b0ac46c74dd11364ce1502e7abed7cbfb338d09bf5f24e06880490b90.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;Style-of-Faulting (S; R; N; U)&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fceeddfab925a6927f26503e929eaa4f7b1dd2709dedd54cae3480a2c0751a3f.png" src="_images/fceeddfab925a6927f26503e929eaa4f7b1dd2709dedd54cae3480a2c0751a3f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;Fault Plane (1; 2; X)&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2aeac4c05632f90faeb20fde83336e57155734443585510e2fdd4f1e2dc3743e.png" src="_images/2aeac4c05632f90faeb20fde83336e57155734443585510e2fdd4f1e2dc3743e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># columnas numericas</span>
+<span class="n">df_numerico</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span>
+
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">font_scale</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="mi">13</span><span class="p">))</span>
+
+<span class="c1"># Spearman con mapa</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_numerico</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fault Plane (1; 2; X)&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;spearman&quot;</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/28e3ef0ba4657321fe77fccc96ccc5e0561b48f4fccffb2b7a722110b85a3040.png" src="_images/28e3ef0ba4657321fe77fccc96ccc5e0561b48f4fccffb2b7a722110b85a3040.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">df_numerico</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fault Plane (1; 2; X)&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;spearman&quot;</span><span class="p">)</span>
+<span class="n">corr_matrix</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>T_0.01_RotD50                     1.000000
+Magnitude                         0.295781
+Hypocenter Depth (km)             0.292586
+Station Elevation (m)             0.151615
+Nodal Plane 1 Rake Angle (deg)    0.034938
+Nodal Plane 2 Rake Angle (deg)    0.012870
+Rx_OpenQuake                      0.012414
+Nodal Plane 2 Dip (deg)          -0.018458
+Nodal Plane 2 Strike (deg)       -0.076636
+Nodal Plane 1 Strike (deg)       -0.136771
+Nodal Plane 1 Dip (deg)          -0.147884
+Ry0_OpenQuake                    -0.535282
+Rhypo_OpenQuake                  -0.665238
+Rrup_OpenQuake                   -0.670357
+Repi_OpenQuake                   -0.676597
+Rjb_OpenQuake                    -0.680292
+Name: T_0.01_RotD50, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filtrar solo variables seleccionadas</span>
+<span class="n">selected_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Rjb_OpenQuake&quot;</span><span class="p">,</span> <span class="s2">&quot;Magnitude&quot;</span><span class="p">,</span> <span class="s2">&quot;Station Elevation (m)&quot;</span><span class="p">,</span> <span class="s2">&quot;Hypocenter Depth (km)&quot;</span><span class="p">,</span><span class="s2">&quot;Nodal Plane 1 Dip (deg)&quot;</span><span class="p">,</span><span class="s2">&quot;Nodal Plane 1 Strike (deg)&quot;</span> <span class="p">,</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">df_copy</span><span class="p">[</span><span class="n">selected_vars</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/750b52781775c7ab0e9a647f9de186d581e8211416212c992921503f124852e9.png" src="_images/750b52781775c7ab0e9a647f9de186d581e8211416212c992921503f124852e9.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">variable_respuesta</span> <span class="o">=</span> <span class="s2">&quot;T_0.01_RotD50&quot;</span>
+<span class="n">variables_categoricas</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Fault Plane (1; 2; X)&quot;</span><span class="p">,</span> 
+                         <span class="s2">&quot;Style-of-Faulting (S; R; N; U)&quot;</span><span class="p">,</span> 
+                         <span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">]</span>
+
+<span class="c1"># Iterar sobre cada variable categórica y aplicar la prueba de Kruskal-Wallis</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_categoricas</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">variable_respuesta</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="n">df_copy</span><span class="p">[</span><span class="n">df_copy</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">==</span> <span class="n">cat</span><span class="p">][</span><span class="n">variable_respuesta</span><span class="p">]</span> <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">df_copy</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()]</span>
+    
+    <span class="n">kruskal_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kruskal</span><span class="p">(</span><span class="o">*</span><span class="n">groups</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kruskal-Wallis H: </span><span class="si">{</span><span class="n">kruskal_stat</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, p-valor: </span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Fault Plane (1; 2; X) and T_0.01_RotD50
+Kruskal-Wallis H: 15.136, p-valor: 0.00010
+
+ Style-of-Faulting (S; R; N; U) and T_0.01_RotD50
+Kruskal-Wallis H: 66.674, p-valor: 0.00000
+
+ Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust) and T_0.01_RotD50
+Kruskal-Wallis H: 518.476, p-valor: 0.00000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">variable_respuesta</span> <span class="o">=</span> <span class="s2">&quot;T_0.01_RotD50&quot;</span>
+
+<span class="n">variables_categoricas</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Fault Plane (1; 2; X)&quot;</span><span class="p">,</span> 
+                         <span class="s2">&quot;Style-of-Faulting (S; R; N; U)&quot;</span><span class="p">,</span> 
+                         <span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">]</span>
+
+
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_categoricas</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">variable_respuesta</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_copy</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribution of </span><span class="si">{</span><span class="n">variable_respuesta</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">variable_respuesta</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>  
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3184ed6a09b826bc88bea3ce1066fc4172db45e91dea08738f0c3cc855cd232a.png" src="_images/3184ed6a09b826bc88bea3ce1066fc4172db45e91dea08738f0c3cc855cd232a.png" />
+<img alt="_images/5c912e5dd4b33c6191c926213fd9f417ed6149cba255001b539f5660e663017e.png" src="_images/5c912e5dd4b33c6191c926213fd9f417ed6149cba255001b539f5660e663017e.png" />
+<img alt="_images/1ed0b64e2de7ebd9fcf3272c163abdbfbcfdaf56c468b961139f0408ce0951e5.png" src="_images/1ed0b64e2de7ebd9fcf3272c163abdbfbcfdaf56c468b961139f0408ce0951e5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scikit_posthocs</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+
+
+<span class="c1"># Iterar sobre cada variable categórica</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_categoricas</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> post-hoc for </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1">#Kruskal-Wallis</span>
+    <span class="n">H</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">kruskal</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">df_copy</span><span class="p">[</span><span class="n">df_copy</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">==</span> <span class="n">cat</span><span class="p">][</span><span class="n">variable_respuesta</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> 
+                            <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">df_copy</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()])</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kruskal-Wallis H: </span><span class="si">{</span><span class="n">H</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, p-valor: </span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1">#Si hay diferencias significativas, aplicar la prueba de Dunn con corrección de Bonferroni</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+        <span class="n">dunn_test</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">posthoc_dunn</span><span class="p">(</span><span class="n">df_copy</span><span class="p">,</span> <span class="n">val_col</span><span class="o">=</span><span class="n">variable_respuesta</span><span class="p">,</span> <span class="n">group_col</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">p_adjust</span><span class="o">=</span><span class="s2">&quot;bonferroni&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Dunn&#39;s test with Bonferroni&#39;s correction:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">dunn_test</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No significative diferences&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> post-hoc for Fault Plane (1; 2; X)
+Kruskal-Wallis H: 15.1359, p-valor: 0.00010
+
+ Dunn&#39;s test with Bonferroni&#39;s correction:
+        1       2
+1  1.0000  0.0001
+2  0.0001  1.0000
+
+ post-hoc for Style-of-Faulting (S; R; N; U)
+Kruskal-Wallis H: 66.6736, p-valor: 0.00000
+
+ Dunn&#39;s test with Bonferroni&#39;s correction:
+              N             R             S
+N  1.000000e+00  2.549931e-10  2.310032e-15
+R  2.549931e-10  1.000000e+00  1.000000e+00
+S  2.310032e-15  1.000000e+00  1.000000e+00
+
+ post-hoc for Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)
+Kruskal-Wallis H: 518.4764, p-valor: 0.00000
+
+ Dunn&#39;s test with Bonferroni&#39;s correction:
+                Crustal          Deep        Inslab     Interface
+Crustal    1.000000e+00  1.563939e-53  2.261259e-73  5.173273e-01
+Deep       1.563939e-53  1.000000e+00  4.965540e-05  4.036049e-34
+Inslab     2.261259e-73  4.965540e-05  1.000000e+00  8.263655e-51
+Interface  5.173273e-01  4.036049e-34  8.263655e-51  1.000000e+00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aplicar la prueba de Dunn con corrección de Bonferroni</span>
+<span class="n">dunn_test</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">posthoc_dunn</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">val_col</span><span class="o">=</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">,</span> <span class="n">group_col</span><span class="o">=</span><span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">,</span> <span class="n">p_adjust</span><span class="o">=</span><span class="s2">&quot;bonferroni&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">dunn_test</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.2e&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">dunn_test</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">dunn_test</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;p-values Matrix - Dunn&#39;s test with Bonferroni&#39;s correction&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0367be99d29f6db2c3bc03cdba9cfa087bf7b7afb7caaf17da34ac02e735d4a2.png" src="_images/0367be99d29f6db2c3bc03cdba9cfa087bf7b7afb7caaf17da34ac02e735d4a2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.outliers_influence</span><span class="w"> </span><span class="kn">import</span> <span class="n">variance_inflation_factor</span>
+<span class="c1"># Estandarizar datos</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">df_scaled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_numerico</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">df_numerico</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="c1"># Calcular VIF</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df_scaled</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">VIF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">VIF</span><span class="p">[</span><span class="s2">&quot;Variable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">VIF</span><span class="p">[</span><span class="s2">&quot;VIF&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">variance_inflation_factor</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">VIF</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                          Variable            VIF
+0            Hypocenter Depth (km)       9.942200
+1                        Magnitude       2.846170
+2       Nodal Plane 1 Strike (deg)       1.133413
+3          Nodal Plane 1 Dip (deg)       1.278794
+4   Nodal Plane 1 Rake Angle (deg)       1.434299
+5       Nodal Plane 2 Strike (deg)       1.072851
+6          Nodal Plane 2 Dip (deg)       1.177402
+7   Nodal Plane 2 Rake Angle (deg)       1.282897
+8            Fault Plane (1; 2; X)       1.307606
+9            Station Elevation (m)       1.016892
+10                  Repi_OpenQuake  110339.717275
+11                   Rjb_OpenQuake   97073.567202
+12                  Rrup_OpenQuake   81835.209406
+13                    Rx_OpenQuake       1.124794
+14                 Rhypo_OpenQuake   94708.107446
+15                   Ry0_OpenQuake       3.081469
+</pre></div>
+</div>
 </div>
 </div>
 <p>There is a lot more that you can do with outputs (such as including interactive outputs)
