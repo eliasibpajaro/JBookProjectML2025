@@ -65,6 +65,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'eda';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Machine Learning models applied." href="Models.html" />
     <link rel="prev" title="Machine Learning into the Civil Engineering" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -171,6 +172,7 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Optimized Machine Learning Model for Predicting and Analyzing Accelerations in the New Ground Motion Models for Northern South America (NoSAm GMMs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Models.html">Machine Learning models applied.</a></li>
 </ul>
 
     </div>
@@ -364,6 +366,16 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos-eda">1. Análisis Exploratorio de datos  (EDA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado">1.1. Análisis Univariado</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-numericas">1.1.1. Variables Numéricas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-categoricas">1.1.2 Variables Categóricas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado">1.2. Análisis Bivariado</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1.2.1 Variables Numéricas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-categoricas-con-variable-de-respuesta">1.1.2 Variables Categóricas con variable de respuesta</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -831,8 +843,7 @@ memory usage: 2.0+ MB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EQID
-CO_20150310205544    86
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CO_20150310205544    86
 CO_20191224190352    62
 CO_20190126123226    61
 CO_20180923043745    60
@@ -843,7 +854,7 @@ CO_20060129174914     1
 CO_20010908224510     1
 CO_19980623013633     1
 CO_19950423235543     1
-Name: count, Length: 267, dtype: int64
+Name: EQID, Length: 267, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -855,8 +866,7 @@ Name: count, Length: 267, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Station ID
-RNAC_253    171
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RNAC_253    171
 RNAC_274    171
 RNAC_244    170
 RNAC_333    165
@@ -867,7 +877,7 @@ RNAC_215      1
 RNAC_213      1
 RNAC_199      1
 RNAC_302      1
-Name: count, Length: 270, dtype: int64
+Name: Station ID, Length: 270, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -879,8 +889,7 @@ Name: count, Length: 270, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Station Code
-MAN1C    171
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MAN1C    171
 NOR      171
 FLO2     170
 YOT      165
@@ -891,7 +900,7 @@ CTVCA      1
 CTUNA      1
 CTEJE      1
 RAC11      1
-Name: count, Length: 270, dtype: int64
+Name: Station Code, Length: 270, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -903,9 +912,8 @@ Name: count, Length: 270, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Magnitude type
-Mw    8811
-Name: count, dtype: int64
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mw    8811
+Name: Magnitude type, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -1219,6 +1227,11 @@ Las transformaciones algunas veces son necesarias para ajustar el comportamiento
 </div>
 </div>
 </div>
+</section>
+<section id="analisis-univariado">
+<h2>1.1. Análisis Univariado<a class="headerlink" href="#analisis-univariado" title="Link to this heading">#</a></h2>
+<section id="variables-numericas">
+<h3>1.1.1. Variables Numéricas<a class="headerlink" href="#variables-numericas" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_copy</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
@@ -1703,9 +1716,9 @@ Kurtosis:  -0.44
 <img alt="_images/48cbe22a08af68507e722e9765d800dd78f4cf448b0613cd9b0d7e1b2083018b.png" src="_images/48cbe22a08af68507e722e9765d800dd78f4cf448b0613cd9b0d7e1b2083018b.png" />
 </div>
 </div>
-<ul class="simple">
-<li><p><strong>Variables categóricas</strong></p></li>
-</ul>
+</section>
+<section id="variables-categoricas">
+<h3>1.1.2 Variables Categóricas<a class="headerlink" href="#variables-categoricas" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df_copy</span><span class="p">[</span><span class="s2">&quot;Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)&quot;</span><span class="p">])</span>
@@ -1739,10 +1752,16 @@ Kurtosis:  -0.44
 <img alt="_images/2aeac4c05632f90faeb20fde83336e57155734443585510e2fdd4f1e2dc3743e.png" src="_images/2aeac4c05632f90faeb20fde83336e57155734443585510e2fdd4f1e2dc3743e.png" />
 </div>
 </div>
+</section>
+</section>
+<section id="analisis-bivariado">
+<h2>1.2. Análisis Bivariado<a class="headerlink" href="#analisis-bivariado" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>1.2.1 Variables Numéricas<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># columnas numericas</span>
-<span class="n">df_numerico</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span>
+<span class="n">df_numerico</span> <span class="o">=</span> <span class="n">df_copy</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span>
 
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">font_scale</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
@@ -1801,6 +1820,9 @@ Name: T_0.01_RotD50, dtype: float64
 <img alt="_images/750b52781775c7ab0e9a647f9de186d581e8211416212c992921503f124852e9.png" src="_images/750b52781775c7ab0e9a647f9de186d581e8211416212c992921503f124852e9.png" />
 </div>
 </div>
+</section>
+<section id="variables-categoricas-con-variable-de-respuesta">
+<h3>1.1.2 Variables Categóricas con variable de respuesta<a class="headerlink" href="#variables-categoricas-con-variable-de-respuesta" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">variable_respuesta</span> <span class="o">=</span> <span class="s2">&quot;T_0.01_RotD50&quot;</span>
@@ -1933,46 +1955,9 @@ Interface  5.173273e-01  4.036049e-34  8.263655e-51  1.000000e+00
 <img alt="_images/0367be99d29f6db2c3bc03cdba9cfa087bf7b7afb7caaf17da34ac02e735d4a2.png" src="_images/0367be99d29f6db2c3bc03cdba9cfa087bf7b7afb7caaf17da34ac02e735d4a2.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.stats.outliers_influence</span><span class="w"> </span><span class="kn">import</span> <span class="n">variance_inflation_factor</span>
-<span class="c1"># Estandarizar datos</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">df_scaled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_numerico</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">df_numerico</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-<span class="c1"># Calcular VIF</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df_scaled</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">VIF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="n">VIF</span><span class="p">[</span><span class="s2">&quot;Variable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span>
-<span class="n">VIF</span><span class="p">[</span><span class="s2">&quot;VIF&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">variance_inflation_factor</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">VIF</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                          Variable            VIF
-0            Hypocenter Depth (km)       9.942200
-1                        Magnitude       2.846170
-2       Nodal Plane 1 Strike (deg)       1.133413
-3          Nodal Plane 1 Dip (deg)       1.278794
-4   Nodal Plane 1 Rake Angle (deg)       1.434299
-5       Nodal Plane 2 Strike (deg)       1.072851
-6          Nodal Plane 2 Dip (deg)       1.177402
-7   Nodal Plane 2 Rake Angle (deg)       1.282897
-8            Fault Plane (1; 2; X)       1.307606
-9            Station Elevation (m)       1.016892
-10                  Repi_OpenQuake  110339.717275
-11                   Rjb_OpenQuake   97073.567202
-12                  Rrup_OpenQuake   81835.209406
-13                    Rx_OpenQuake       1.124794
-14                 Rhypo_OpenQuake   94708.107446
-15                   Ry0_OpenQuake       3.081469
-</pre></div>
-</div>
-</div>
-</div>
 <p>There is a lot more that you can do with outputs (such as including interactive outputs)
 with your book. For more information about this, see <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a></p>
+</section>
 </section>
 </section>
 
@@ -2015,6 +2000,15 @@ with your book. For more information about this, see <a class="reference externa
         <p class="prev-next-title">Machine Learning into the Civil Engineering</p>
       </div>
     </a>
+    <a class="right-next"
+       href="Models.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Machine Learning models applied.</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -2033,6 +2027,16 @@ with your book. For more information about this, see <a class="reference externa
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos-eda">1. Análisis Exploratorio de datos  (EDA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-univariado">1.1. Análisis Univariado</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-numericas">1.1.1. Variables Numéricas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-categoricas">1.1.2 Variables Categóricas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado">1.2. Análisis Bivariado</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1.2.1 Variables Numéricas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables-categoricas-con-variable-de-respuesta">1.1.2 Variables Categóricas con variable de respuesta</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
