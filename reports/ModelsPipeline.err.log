@@ -30,7 +30,10 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-grid_searchStacking = GridSearchCV(estimator=stack,param_grid=param_grid_Stacking,cv=5,scoring='neg_root_mean_squared_error',n_jobs=-1)
-grid_searchStacking.fit(X_train, y_train)
+grid_searchLASSO = GridSearchCV(pipeLASSO  , param_grid=param_gridlasso, scoring='neg_root_mean_squared_error', cv=5, n_jobs=6)
+grid_searchLASSO.fit(X_train, y_train)
+print("Best cross-validation accuracy: {:.2f}".format(grid_searchLASSO.best_score_))
+print("Test set score: {:.2f}".format(grid_searchLASSO.score(X_test, y_test)))
+print("Best parameters: {}".format(grid_searchLASSO.best_params_))
 -------------------
 
