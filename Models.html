@@ -425,6 +425,7 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;C:/Users/elias/OneDrive/Desktop/MachineLearning/MLProject/Copia de DataBaseSGC.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;df = df.sort_values(by=&quot;T_0.01_RotD50&quot;, ascending=True)</span>
 <span class="sd">df.reset_index(drop=True, inplace=True)&quot;&quot;&quot;</span>
+<span class="c1">#df= pd.read_excel(&#39;C:/Users/elias/OneDrive/Desktop/MachineLearning/MLProject/CopiaDataBaseSGC.xlsx&#39;)</span>
 </pre></div>
 </div>
 </div>
@@ -1058,6 +1059,13 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#df = df.iloc[:, :df.columns.get_loc(&quot;T_0.01_RotD50&quot;) + 1]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
 <span class="n">categorical_columns</span>
 </pre></div>
@@ -1112,7 +1120,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;T_0.01_RotD50&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
-<span class="sd">&quot;&quot;&quot;df = df[df[&#39;Rhypo_OpenQuake&#39;] &lt; 350]</span>
+<span class="sd">&quot;&quot;&quot;df = df[df[&#39;Rhypo_OpenQuake&#39;] &lt; 600]</span>
 <span class="sd">df[&quot;T_0.01_RotD50&quot;]= df[&quot;T_0.01_RotD50&quot;]/980</span>
 <span class="sd">df = df[df[&#39;T_0.01_RotD50&#39;] &gt; 0.0001]</span>
 <span class="sd">df[&quot;T_0.01_RotD50&quot;]= df[&quot;T_0.01_RotD50&quot;]*980</span>
@@ -1121,7 +1129,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;df = df[df[\&#39;Rhypo_OpenQuake\&#39;] &lt; 350]\ndf[&quot;T_0.01_RotD50&quot;]= df[&quot;T_0.01_RotD50&quot;]/980\ndf = df[df[\&#39;T_0.01_RotD50\&#39;] &gt; 0.0001]\ndf[&quot;T_0.01_RotD50&quot;]= df[&quot;T_0.01_RotD50&quot;]*980\ndf.reset_index(drop=True, inplace=True)&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;df = df[df[\&#39;Rhypo_OpenQuake\&#39;] &lt; 600]\ndf[&quot;T_0.01_RotD50&quot;]= df[&quot;T_0.01_RotD50&quot;]/980\ndf = df[df[\&#39;T_0.01_RotD50\&#39;] &gt; 0.0001]\ndf[&quot;T_0.01_RotD50&quot;]= df[&quot;T_0.01_RotD50&quot;]*980\ndf.reset_index(drop=True, inplace=True)&#39;
 </pre></div>
 </div>
 </div>
@@ -1377,7 +1385,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span><span class="o">=</span><span class="n">X</span><span class="p">[[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1701,12 +1709,12 @@
 <span class="sd">&quot;&quot;&quot;A_categorical = df_copy[[&#39;Topografia&#39;]].astype(str)</span>
 
 <span class="sd">enc = OneHotEncoder(sparse_output=False)</span>
-<span class="sd">A_encoded = enc.fit_transform(A_categorical)  # Devuelve un array listo para KNN</span>
+<span class="sd">A_encoded = enc.fit_transform(A_categorical)  </span>
 
 <span class="sd">B_categorical = df_copy[[&#39;Geologia&#39;]].astype(str)</span>
 
 <span class="sd">enc = OneHotEncoder(sparse_output=False)</span>
-<span class="sd">B_encoded = enc.fit_transform(B_categorical)  # Devuelve un array listo para KNN&quot;&quot;&quot;</span>
+<span class="sd">B_encoded = enc.fit_transform(B_categorical) &quot;&quot;&quot;</span>
 
 <span class="n">X_numerical</span> <span class="o">=</span> <span class="n">df_scaled</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
 
@@ -2545,7 +2553,6 @@ Number of features used: 16
 <span class="sd">param_grid = {</span>
 <span class="sd">    &#39;min_samples_split&#39;: [2, 5, 10, 20],  # Valores más altos = menos splits</span>
 <span class="sd">    &#39;min_samples_leaf&#39;: [1, 2, 4, 8],  # Valores altos = más generalización</span>
-
 <span class="sd">}</span>
 
 <span class="sd">grid = GridSearchCV(randforreg, param_grid, scoring=&#39;r2&#39;, cv=3, n_jobs=7)</span>
@@ -2556,7 +2563,7 @@ Number of features used: 16
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;from sklearn.model_selection import GridSearchCV\n\nparam_grid = {\n    \&#39;min_samples_split\&#39;: [2, 5, 10, 20],  # Valores más altos = menos splits\n    \&#39;min_samples_leaf\&#39;: [1, 2, 4, 8],  # Valores altos = más generalización\n\n}\n\ngrid = GridSearchCV(randforreg, param_grid, scoring=\&#39;r2\&#39;, cv=3, n_jobs=7)\ngrid.fit(X_trainRAND, y_trainRAND)\n\nprint(&quot;Mejores parámetros:&quot;, grid.best_params_)&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;from sklearn.model_selection import GridSearchCV\n\nparam_grid = {\n    \&#39;min_samples_split\&#39;: [2, 5, 10, 20],  # Valores más altos = menos splits\n    \&#39;min_samples_leaf\&#39;: [1, 2, 4, 8],  # Valores altos = más generalización\n}\n\ngrid = GridSearchCV(randforreg, param_grid, scoring=\&#39;r2\&#39;, cv=3, n_jobs=7)\ngrid.fit(X_trainRAND, y_trainRAND)\n\nprint(&quot;Mejores parámetros:&quot;, grid.best_params_)&#39;
 </pre></div>
 </div>
 </div>
@@ -3004,9 +3011,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training set score: 0.80
 Test set score: 0.76
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total score: 0.78
+Total score: 0.78
 </pre></div>
 </div>
 </div>
@@ -3079,7 +3084,7 @@ Test set score: 0.76
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y_XGB</span><span class="o">=</span><span class="n">X_XGB</span><span class="p">[</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">X_XGB</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
+<span class="n">X_XGB</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;T_0.01_RotD50&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3541,30 +3546,6 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <span class="n">y_predXGB</span> <span class="o">=</span> <span class="n">modelXGB</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_testXGB</span><span class="p">)</span>
 <span class="n">y_predTODOSXGB</span><span class="o">=</span> <span class="n">modelXGB</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_XGB</span><span class="p">)</span>
 <span class="n">yTodosXGBArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Y_XGB</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">y_testXGB</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.series.Series
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">y_predXGB</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numpy.ndarray
 </pre></div>
 </div>
 </div>
@@ -40767,25 +40748,25 @@ Test set :  0.8287902636661468
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divXPUL15MXKC5EDJ0"></div>
+        <div class="lime top_div" id="top_divKEDS5AK5Q3L7H10"></div>
         
         <script>
-        var top_div = d3.select('#top_divXPUL15MXKC5EDJ0').classed('lime top_div', true);
+        var top_div = d3.select('#top_divKEDS5AK5Q3L7H10').classed('lime top_div', true);
         
         
                     var pp_div = top_div.append('div')
                                         .classed('lime predicted_value', true);
                     var pp_svg = pp_div.append('svg').style('width', '100%');
-                    var pp = new lime.PredictedValue(pp_svg, 0.6694628596305847, 0.3687601089477539, 0.8857240676879883);
+                    var pp = new lime.PredictedValue(pp_svg, 0.6694628596305847, 0.38199877738952637, 0.9113767147064209);
                     
         var exp_div;
             var exp = new lime.Explanation(["negative", "positive"]);
         
             exp_div = top_div.append('div').classed('lime explanation', true);
-            exp.show([["Rjb_OpenQuake", -0.06804585710310544], ["Magnitude", 0.031912964147423346], ["Station Elevation (m)", -0.02060409789488338], ["Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)=Deep", 0.007272331432654431], ["Nodal Plane 1 Dip (deg)", -0.0040084486712245885], ["Hypocenter Depth (km)", 0.0033521106301611417], ["Style-of-Faulting (S; R; N; U)=S", -0.0016158941826104833], ["Nodal Plane 1 Strike (deg)", -0.001485275531359773], ["Fault Plane (1; 2; X)", 0.00023556129406457452]], 1, exp_div);
+            exp.show([["Rjb_OpenQuake", -0.06896382764803255], ["Magnitude", 0.031091617372910826], ["Station Elevation (m)", -0.01719218545975131], ["Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)=Deep", 0.004575614096974951], ["Hypocenter Depth (km)", 0.003995682352523993], ["Nodal Plane 1 Dip (deg)", -0.0031180852098078547], ["Style-of-Faulting (S; R; N; U)=S", 0.0011160033918514417], ["Nodal Plane 1 Strike (deg)", -0.0009558009967412121], ["Fault Plane (1; 2; X)", -0.0004677019747105924]], 1, exp_div);
             
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["Rjb_OpenQuake", "0.14", -0.06804585710310544], ["Magnitude", "0.30", 0.031912964147423346], ["Station Elevation (m)", "0.62", -0.02060409789488338], ["Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)=Deep", "True", 0.007272331432654431], ["Nodal Plane 1 Dip (deg)", "0.96", -0.0040084486712245885], ["Hypocenter Depth (km)", "0.71", 0.0033521106301611417], ["Style-of-Faulting (S; R; N; U)=S", "True", -0.0016158941826104833], ["Nodal Plane 1 Strike (deg)", "0.45", -0.001485275531359773], ["Fault Plane (1; 2; X)", "2.00", 0.00023556129406457452]], 1, raw_div);
+            exp.show_raw_tabular([["Rjb_OpenQuake", "0.14", -0.06896382764803255], ["Magnitude", "0.30", 0.031091617372910826], ["Station Elevation (m)", "0.62", -0.01719218545975131], ["Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)=Deep", "True", 0.004575614096974951], ["Hypocenter Depth (km)", "0.71", 0.003995682352523993], ["Nodal Plane 1 Dip (deg)", "0.96", -0.0031180852098078547], ["Style-of-Faulting (S; R; N; U)=S", "True", 0.0011160033918514417], ["Nodal Plane 1 Strike (deg)", "0.45", -0.0009558009967412121], ["Fault Plane (1; 2; X)", "2.00", -0.0004677019747105924]], 1, raw_div);
         
         </script>
         </body></html></div></div>
@@ -40813,13 +40794,66 @@ dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_trainXGB_lime</span><span class="p">[</span><span class="n">X_trainXGB_lime</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hypocenter Depth (km)</th>
+      <th>Magnitude</th>
+      <th>Nodal Plane 1 Strike (deg)</th>
+      <th>Nodal Plane 1 Dip (deg)</th>
+      <th>Station Elevation (m)</th>
+      <th>Rjb_OpenQuake</th>
+      <th>Tectonic environment (Crustal; Inslab; Interface; Stable; Deep; Volcanic; Oceanic_crust)</th>
+      <th>Fault Plane (1; 2; X)</th>
+      <th>Style-of-Faulting (S; R; N; U)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4079</th>
+      <td>0.031115</td>
+      <td>0.175782</td>
+      <td>0.748603</td>
+      <td>1.0</td>
+      <td>0.140852</td>
+      <td>0.308585</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>-1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span><span class="o">.</span><span class="n">as_pyplot_figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/71078f21b1b7371f22362dac7a7c936ed1f11cb1fd3ac70036ead0922a866d8b.png" src="_images/71078f21b1b7371f22362dac7a7c936ed1f11cb1fd3ac70036ead0922a866d8b.png" />
+<img alt="_images/d93bd221ebdbb1f4ccec8729e5a933cd0cd8a9bb05ef85237d8044ad2bd21e73.png" src="_images/d93bd221ebdbb1f4ccec8729e5a933cd0cd8a9bb05ef85237d8044ad2bd21e73.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -43091,6 +43125,18 @@ Puntaje test para svm con kernel poly: 0.6335861617534384
 </div>
 <div class="cell_output docutils container">
 <img alt="_images/7900833a438402dc8c66d30f0ffc504a5eb2059773511789d773e30c3a3da79f.png" src="_images/7900833a438402dc8c66d30f0ffc504a5eb2059773511789d773e30c3a3da79f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>148.4131591025766
+</pre></div>
+</div>
 </div>
 </div>
 <div class="cell docutils container">
