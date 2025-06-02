@@ -30,6 +30,7 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-stacking_model.fit(X_train, y_train)
+modelo_crustal = MultiOutputRegressor(CatBoostRegressor(), n_jobs=-1)
+modelo_crustal.fit(X_train_Crustal, y_train_Crustal)
 -------------------
 
